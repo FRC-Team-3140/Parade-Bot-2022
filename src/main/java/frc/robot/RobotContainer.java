@@ -14,6 +14,7 @@ import frc.robot.commands.Autonomous.taxi;
 import frc.robot.commands.drivetrain.Drive;
 import frc.robot.commands.pneumatics.ShiftDown;
 import frc.robot.commands.pneumatics.ShiftUp;
+import frc.robot.subsystems.CandyLift;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Pneumatics;
 
@@ -23,6 +24,8 @@ public class RobotContainer implements HardwareAdapter {
 
     public static Drivetrain dt = new Drivetrain();
     public static Pneumatics pn = new Pneumatics();
+    public static CandyLift cl = new CandyLift();
+
     public RobotContainer() {
         configDefaultCommands();
         configButtons();
@@ -44,6 +47,11 @@ public class RobotContainer implements HardwareAdapter {
     public void configButtons() {
         xbox.leftBumper.whenPressed(new ShiftUp());
         xbox.leftBumper.whenReleased(new ShiftDown());
+
+        xbox.a.whenPressed(() -> {cl.ButtonUpPressed(); });
+        xbox.a.whenReleased(() -> {cl.ButtonUpReleased(); });
+        xbox.b.whenPressed(() -> {cl.ButtonDownPressed(); });
+        xbox.b.whenReleased(() -> {cl.ButtonDownReleased(); });
     }
     public Command getAutonomousCommand() {
         return chooser.getSelected();
